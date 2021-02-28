@@ -121,7 +121,7 @@ class DefaultIJKControllerWidgetState extends State<DefaultIJKControllerWidget>
 
   GlobalKey currentKey = GlobalKey();
 
-  bool _isShow = true;
+  bool _isShow = false;
 
   set isShow(bool value) {
     _isShow = value;
@@ -320,7 +320,7 @@ class DefaultIJKControllerWidgetState extends State<DefaultIJKControllerWidget>
 
   _ProgressCalculator _calculator;
 
-  onTap() => isShow = !isShow;
+  onTap() {}
 
   Function onDoubleTap() {
     return widget.doubleTapPlay
