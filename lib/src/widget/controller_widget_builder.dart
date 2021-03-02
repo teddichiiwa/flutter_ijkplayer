@@ -63,6 +63,8 @@ class DefaultIJKControllerWidget extends StatefulWidget {
   /// Callback in full screen, full screen when enter true, false to exit full screen.
   final void Function(bool enter) onFullScreen;
 
+  final bool goFullScreen;
+
   /// The UI of the controller.
   const DefaultIJKControllerWidget({
     Key key,
@@ -78,6 +80,7 @@ class DefaultIJKControllerWidget extends StatefulWidget {
     this.fullScreenType = FullScreenType.rotateBox,
     this.hideSystemBarOnFullScreen = true,
     this.onFullScreen,
+    this.goFullScreen,
   }) : super(key: key);
 
   @override
@@ -96,6 +99,7 @@ class DefaultIJKControllerWidget extends StatefulWidget {
     bool showFullScreenButton,
     IJKControllerWidgetBuilder fullscreenControllerWidgetBuilder,
     FullScreenType fullScreenType,
+    bool goFullScreen,
   }) {
     return DefaultIJKControllerWidget(
       controller: controller ?? this.controller,
@@ -111,6 +115,7 @@ class DefaultIJKControllerWidget extends StatefulWidget {
       showFullScreenButton: showFullScreenButton ?? this.showFullScreenButton,
       verticalGesture: verticalGesture ?? this.verticalGesture,
       fullScreenType: fullScreenType ?? this.fullScreenType,
+      goFullScreen: goFullScreen ?? this.goFullScreen,
     );
   }
 }
@@ -201,6 +206,11 @@ class DefaultIJKControllerWidgetState extends State<DefaultIJKControllerWidget>
   }
 
   Widget buildContent() {
+    if (widget.goFullScreen && !widget.currentFullScreenState) {
+      print(">> go full screen: ${widget.currentFullScreenState}");
+      fullScreen();
+    }
+
     if (!isShow) {
       return Container();
     }
@@ -341,7 +351,7 @@ class DefaultIJKControllerWidgetState extends State<DefaultIJKControllerWidget>
     var videoInfo = await controller.getVideoInfo();
     _calculator = _ProgressCalculator(details, videoInfo);
     final rotateBoxProvider = _RotateBoxProvider.of(context);
-    if(rotateBoxProvider != null && rotateBoxProvider.quarterTurns == 1){
+    if (rotateBoxProvider != null && rotateBoxProvider.quarterTurns == 1) {
       _calculator.replaceXToY = true;
     }
   }
