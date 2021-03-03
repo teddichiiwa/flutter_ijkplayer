@@ -153,10 +153,33 @@ _showFullScreenWithRotateBox(
           child: SafeArea(
             child: RotatedBox(
               quarterTurns: quarterTurns,
-              child: IjkPlayer(
-                mediaController: controller,
-                controllerWidgetBuilder: (ctl) =>
-                    fullscreenControllerWidgetBuilder(ctl),
+              child: Stack(
+                children: [
+                  IjkPlayer(
+                    mediaController: controller,
+                    controllerWidgetBuilder: (ctl) =>
+                        fullscreenControllerWidgetBuilder(ctl),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: SizedBox(
+                      height: 40,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.fullscreen_exit,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
